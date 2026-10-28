@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/var/www/html
+      - laravel_vendor:/var/www/html/vendor
+    working_dir: /var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE:-productos_db}
+      DB_USERNAME: ${DB_USERNAME:-productos_user}
+      DB_PASSWORD: ${DB_PASSWORD:-productos_password}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: >-
+      sh -c "composer install --no-interaction --prefer-dist --no-progress &&
+      php artisan serve --host=0.0.0.0 --port=8000"
+
+  mysql:
+    image: mysql:8.4
+    ports:
+      - "127.0.0.1:3307:3306"
+    environment:
+      MYSQL_DATABASE: crud_productos
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel123
+      MYSQL_ROOT_PASSWORD: root123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysql -h 127.0.0.1 -u root -p\"$$MYSQL_ROOT_PASSWORD\" -e 'SELECT 1' > /dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+volumes:
+  laravel_vendor:
+  mysql_data:
