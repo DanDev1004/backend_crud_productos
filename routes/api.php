@@ -1,19 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
+use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::apiResource('categories', CategoryController::class)
+    ->missing(fn () => ApiResponse::error('Categoría no encontrada.', [], 404));
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('products', ProductController::class)
+    ->missing(fn () => ApiResponse::error('Producto no encontrado.', [], 404));
+
+Route::fallback(fn () => ApiResponse::error('Endpoint no encontrado.', [], 404));
+

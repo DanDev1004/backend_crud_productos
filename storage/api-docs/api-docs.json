@@ -1,0 +1,427 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API CRUD Productos y Categorías",
+        "description": "API REST en Laravel para gestionar productos y categorías.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Listar categorías",
+                "operationId": "94f6c098b03fde5f1aca32332949390b",
+                "responses": {
+                    "200": {
+                        "description": "Categorías obtenidas correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Categorías obtenidas correctamente."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Crear categoría",
+                "operationId": "ba34349bfe045ee4a3dbbc149550fa94",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 150,
+                                        "example": "Ropa"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Prendas y accesorios",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoría creada correctamente"
+                    },
+                    "422": {
+                        "description": "Error de validación (nombre requerido o duplicado)"
+                    }
+                }
+            }
+        },
+        "/api/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Obtener categoría por ID",
+                "operationId": "fd83eb04083ab453fc4411f2c8df6d8c",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoría obtenida correctamente"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Actualizar categoría",
+                "description": "También admite PATCH con la misma ruta.",
+                "operationId": "6f8e69c614d32f8409ba6c57f90c4887",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 150,
+                                        "example": "Ropa deportiva"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nueva descripción",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Categoría actualizada correctamente"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Eliminar categoría (borrado lógico)",
+                "operationId": "dc91c8b868de8ed2a59c148b097e29d5",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoría eliminada correctamente"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Listar productos",
+                "operationId": "d3a5afdcd65844a4895672ce5df9a082",
+                "responses": {
+                    "200": {
+                        "description": "Productos obtenidos correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Productos obtenidos correctamente."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Crear producto",
+                "operationId": "7eef4ad0a72493f49ea8af56f8803a0b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "price",
+                                    "stock",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 150,
+                                        "example": "Camiseta Overskull"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Camiseta negra edición limitada",
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "minimum": 0.01,
+                                        "example": 89.9
+                                    },
+                                    "stock": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 50
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado correctamente"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/products/{product}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Obtener producto por ID",
+                "operationId": "4ef6cbe4ad18c035f3df08dc15a95a3e",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto obtenido correctamente"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Actualizar producto",
+                "description": "También admite PATCH con la misma ruta.",
+                "operationId": "70513f3dab50bac87b94b3a60d4a6fc3",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 150,
+                                        "example": "Camiseta Overskull Premium"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Edición especial",
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "minimum": 0.01,
+                                        "example": 99.9
+                                    },
+                                    "stock": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 25
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Eliminar producto (borrado lógico)",
+                "operationId": "43917a9dbb1d55d9d34e9e73f1617334",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categorías",
+            "description": "Categorías"
+        },
+        {
+            "name": "Productos",
+            "description": "Productos"
+        }
+    ]
+}
